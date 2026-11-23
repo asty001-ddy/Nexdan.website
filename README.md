@@ -43,6 +43,10 @@ Change text in `src/i18n/content.ts`. Every key exists in both `ar` and `en`; up
 
 Deep navy backgrounds, gold accents and white type, following the NEXDAN brand story posters in `docs/brand-reference/`. Use CSS logical properties (`margin-inline`, `padding-inline-start`, `border-inline-start`) rather than left/right, so layouts flip correctly between Arabic and English.
 
+## Plans
+
+- [30-day SEO plan](docs/seo-30-day-plan.md): Jeddah first, then Riyadh and the whole Kingdom; Arabic first.
+
 ## Open items
 
 - Final domain (`site` in `astro.config.mjs`)
