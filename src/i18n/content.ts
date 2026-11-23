@@ -1,21 +1,53 @@
 // All page copy lives here, one object per language, so Arabic and English stay in step.
-// Source: NEXDAN "Our Story" brand posters (docs/brand-reference/).
+// Brand lines (name meaning, pillars, mission) come from the NEXDAN "Our Story" posters
+// (docs/brand-reference/). Service descriptions were added for search and clarity; confirm
+// their scope with the NEXDAN team before launch.
 
 export type Lang = 'ar' | 'en';
 
 export const content = {
   ar: {
     meta: {
-      title: 'نيكسدان | شبكة الجيل القادم للتقدّم الرقمي',
+      title: 'نيكسدان | حلول الذكاء الاصطناعي والبرمجيات وإنترنت الأشياء',
       description:
-        'نيكسدان منظومة رقمية سعودية متكاملة تسرّع التقدّم وتربط التقنيات بالقطاعات لتقديم حلول ذكية للأفراد والأعمال.',
+        'نيكسدان شركة سعودية تبني حلول الذكاء الاصطناعي والبرمجيات وإنترنت الأشياء للشركات في جدة والرياض وجميع مناطق المملكة، بما يتماشى مع رؤية 2030.',
+      ogLocale: 'ar_SA',
     },
-    nav: { story: 'قصتنا', pillars: 'ركائزنا', mission: 'رسالتنا', contact: 'تواصل معنا', switch: 'English', switchHref: '/en/' },
+    skip: 'تخطَّ إلى المحتوى',
+    nav: {
+      label: 'القائمة الرئيسية',
+      services: 'خدماتنا',
+      pillars: 'ركائزنا',
+      mission: 'رسالتنا',
+      contact: 'تواصل معنا',
+      switch: 'English',
+      switchHref: '/en/',
+    },
     hero: {
       tagline: 'Next Digital Advancement Network',
-      title: 'شبكة الجيل القادم للتقدّم الرقمي',
-      lead: 'ولدت نيكسدان من رؤية سعودية لبناء منظومة رقمية متكاملة تُسرّع التقدّم، وتربط بين التقنيات والقطاعات، لتصنع حلولاً ذكية تحسّن حياة الأفراد وتدعم نمو الأعمال في المملكة وخارجها.',
-      cta: 'تواصل معنا',
+      title: 'نبني حلول الذكاء الاصطناعي والبرمجيات وإنترنت الأشياء لشركات المملكة',
+      lead: 'نيكسدان، شبكة الجيل القادم للتقدّم الرقمي، شركة سعودية وُلدت من رؤية لبناء منظومة رقمية متكاملة. نعمل مع الشركات في جدة والرياض وسائر مناطق المملكة على حلول ذكية ترفع الكفاءة وتدعم النمو، بما يتماشى مع رؤية السعودية 2030.',
+      cta: 'ناقش مشروعك معنا',
+    },
+    services: {
+      title: 'ما نقدّمه',
+      items: [
+        {
+          icon: 'ai',
+          title: 'الذكاء الاصطناعي للشركات',
+          text: 'مساعدات ذكية، وأتمتة لمعالجة المستندات، وتحليلات تنبؤية مبنية على بيانات شركتك، باللغتين العربية والإنجليزية.',
+        },
+        {
+          icon: 'code',
+          title: 'تطوير البرمجيات',
+          text: 'منصات ويب وتطبيقات جوال وأنظمة داخلية تُبنى حسب طريقة عمل فريقك، وتتكامل مع الأنظمة التي تستخدمها اليوم.',
+        },
+        {
+          icon: 'iot',
+          title: 'حلول إنترنت الأشياء',
+          text: 'حساسات وأجهزة متصلة تراقب المباني والمستودعات والمعدّات، مع لوحات متابعة وتنبيهات لحظية.',
+        },
+      ],
     },
     name: {
       title: 'معنى الاسم',
@@ -27,7 +59,7 @@ export const content = {
       ],
     },
     pillars: {
-      title: 'ما نبنيه',
+      title: 'ركائزنا',
       items: [
         { icon: 'growth', title: 'تمكين الأعمال', text: 'بحلول رقمية ذكية' },
         { icon: 'network', title: 'ربط القطاعات', text: 'في منصة متكاملة' },
@@ -39,21 +71,61 @@ export const content = {
       title: 'رسالتنا',
       text: 'تسريع التقدّم الرقمي عبر حلول مبتكرة وشبكة متكاملة، تضيف قيمة حقيقية للأفراد والشركات والمجتمع.',
     },
-    contact: { title: 'تواصل معنا', text: 'يسعدنا الحديث عن مشروعك القادم.', email: 'info@nexdan.sa' },
+    contact: {
+      title: 'تواصل معنا',
+      text: 'أخبرنا بما تريد بناءه وأين تعمل شركتك، وسنرتّب معك اجتماعاً أولياً لفهم احتياجك.',
+      email: 'info@nexdan.sa',
+      subject: 'استفسار عن مشروع',
+    },
     footer: '© نيكسدان. جميع الحقوق محفوظة.',
+    notFound: {
+      title: 'الصفحة غير موجودة',
+      text: 'ربما نُقلت هذه الصفحة أو كُتب الرابط بشكل خاطئ.',
+      back: 'العودة إلى الصفحة الرئيسية',
+    },
   },
   en: {
     meta: {
-      title: 'NEXDAN | Next Digital Advancement Network',
+      title: 'AI, Software & IoT Solutions in Saudi Arabia | NEXDAN',
       description:
-        'NEXDAN is a Saudi integrated digital ecosystem that accelerates progress and connects technology with industries to deliver intelligent solutions for people and businesses.',
+        'NEXDAN builds AI, software and IoT solutions for businesses in Jeddah, Riyadh and across Saudi Arabia, in line with Vision 2030. Tell us about your project.',
+      ogLocale: 'en_US',
     },
-    nav: { story: 'Our story', pillars: 'What we build', mission: 'Mission', contact: 'Contact', switch: 'العربية', switchHref: '/' },
+    skip: 'Skip to content',
+    nav: {
+      label: 'Main',
+      services: 'Services',
+      pillars: 'Pillars',
+      mission: 'Mission',
+      contact: 'Contact',
+      switch: 'العربية',
+      switchHref: '/',
+    },
     hero: {
       tagline: 'Next Digital Advancement Network',
-      title: 'The next digital advancement network',
-      lead: 'NEXDAN was founded with a Saudi vision to build an integrated digital ecosystem that accelerates progress, connects technology with industries, and delivers intelligent solutions that enhance people’s lives and support business growth across Saudi Arabia and beyond.',
-      cta: 'Get in touch',
+      title: 'We build AI, software and IoT solutions for Saudi businesses',
+      lead: 'NEXDAN is a Saudi company founded to build an integrated digital ecosystem. We work with businesses in Jeddah, Riyadh and across the Kingdom on intelligent solutions that raise efficiency and support growth, in line with Saudi Vision 2030.',
+      cta: 'Discuss your project',
+    },
+    services: {
+      title: 'What we do',
+      items: [
+        {
+          icon: 'ai',
+          title: 'AI for business',
+          text: 'Assistants, document automation and forecasting built on your company’s data, in Arabic and English.',
+        },
+        {
+          icon: 'code',
+          title: 'Software development',
+          text: 'Web platforms, mobile apps and internal systems built around how your team works, and connected to the systems you already use.',
+        },
+        {
+          icon: 'iot',
+          title: 'IoT solutions',
+          text: 'Connected sensors and devices that monitor buildings, warehouses and equipment, with live dashboards and alerts.',
+        },
+      ],
     },
     name: {
       title: 'What the name means',
@@ -65,7 +137,7 @@ export const content = {
       ],
     },
     pillars: {
-      title: 'What we build',
+      title: 'Our pillars',
       items: [
         { icon: 'growth', title: 'Business enablement', text: 'Through smart digital solutions' },
         { icon: 'network', title: 'Industry connectivity', text: 'A unified digital platform' },
@@ -77,7 +149,17 @@ export const content = {
       title: 'Our mission',
       text: 'To accelerate digital advancement through innovative, integrated solutions, creating real value for individuals, businesses and society.',
     },
-    contact: { title: 'Contact', text: 'We would be glad to hear about your next project.', email: 'info@nexdan.sa' },
+    contact: {
+      title: 'Contact',
+      text: 'Tell us what you want to build and where your business operates, and we will arrange a first meeting to understand what you need.',
+      email: 'info@nexdan.sa',
+      subject: 'Project enquiry',
+    },
     footer: '© NEXDAN. All rights reserved.',
+    notFound: {
+      title: 'Page not found',
+      text: 'This page may have moved, or the link may be mistyped.',
+      back: 'Back to the home page',
+    },
   },
 } as const;

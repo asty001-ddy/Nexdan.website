@@ -30,8 +30,9 @@ src/
   components/Home.astro  Home page sections (hero, name meaning, pillars, mission, contact)
   pages/index.astro      Arabic home page (/)
   pages/en/index.astro   English home page (/en/)
+  pages/404.astro        Bilingual not-found page (noindex)
   styles/global.css      Brand tokens and shared styles
-public/                  Static files served as-is (favicon, images)
+public/                  Static files served as-is (favicon, share image og.jpg, robots.txt)
 docs/brand-reference/    Brand story posters supplied by NEXDAN (reference only)
 ```
 
@@ -49,9 +50,11 @@ Deep navy backgrounds, gold accents and white type, following the NEXDAN brand s
 
 ## Open items
 
-- Final domain (`site` in `astro.config.mjs`)
+- Final domain (`site` in `astro.config.mjs` and the `Sitemap:` line in `public/robots.txt`)
 - Official logo files (SVG) to replace the text logo and favicon
 - Confirmed contact email (placeholder `info@nexdan.sa` in `src/i18n/content.ts`)
+- Confirm the scope of the three service descriptions in `content.services`
+- Social profile links and office address for the structured data in `Base.astro`
 
 ## Deployment
 

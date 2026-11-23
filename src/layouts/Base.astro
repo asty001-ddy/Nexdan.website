@@ -6,20 +6,58 @@ import '@fontsource/tajawal/400.css';
 import '@fontsource/tajawal/500.css';
 import '@fontsource/tajawal/700.css';
 import '../styles/global.css';
-import type { Lang } from '../i18n/content';
+import { content, type Lang } from '../i18n/content';
 
 interface Props {
   lang: Lang;
   title: string;
   description: string;
+  /** Set false on pages that have no language twin (e.g. 404). */
+  alternates?: boolean;
+  noindex?: boolean;
 }
 
-const { lang, title, description } = Astro.props;
+const { lang, title, description, alternates = true, noindex = false } = Astro.props;
 const dir = lang === 'ar' ? 'rtl' : 'ltr';
 const site = Astro.site ?? new URL(Astro.url.origin);
 const arUrl = new URL('/', site).href;
 const enUrl = new URL('/en/', site).href;
 const canonical = lang === 'ar' ? arUrl : enUrl;
+const ogImage = new URL('/og.jpg', site).href;
+const otherLocale = content[lang === 'ar' ? 'en' : 'ar'].meta.ogLocale;
+
+// Structured data: who NEXDAN is and where it works. Add `address`, `logo` and `sameAs`
+// (social profiles) once the NEXDAN team confirms them.
+const orgId = new URL('/#organization', site).href;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': orgId,
+      name: 'NEXDAN',
+      alternateName: ['نيكسدان', 'Next Digital Advancement Network'],
+      url: arUrl,
+      email: content.en.contact.email,
+      description: content.en.meta.description,
+      areaServed: [
+        { '@type': 'City', name: 'Jeddah' },
+        { '@type': 'City', name: 'Riyadh' },
+        { '@type': 'Country', name: 'Saudi Arabia' },
+      ],
+      knowsAbout: ['Artificial intelligence', 'Software development', 'Internet of Things', 'Digital transformation'],
+    },
+    {
+      '@type': 'WebSite',
+      '@id': new URL('/#website', site).href,
+      name: 'NEXDAN',
+      alternateName: 'نيكسدان',
+      url: arUrl,
+      inLanguage: ['ar', 'en'],
+      publisher: { '@id': orgId },
+    },
+  ],
+};
 ---
 
 <!doctype html>
@@ -29,14 +67,31 @@ const canonical = lang === 'ar' ? arUrl : enUrl;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="canonical" href={canonical} />
-    <link rel="alternate" hreflang="ar" href={arUrl} />
-    <link rel="alternate" hreflang="en" href={enUrl} />
-    <link rel="alternate" hreflang="x-default" href={arUrl} />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    {alternates && (
+      <>
+        <link rel="canonical" href={canonical} />
+        <link rel="alternate" hreflang="ar" href={arUrl} />
+        <link rel="alternate" hreflang="en" href={enUrl} />
+        <link rel="alternate" hreflang="x-default" href={arUrl} />
+        <meta property="og:url" content={canonical} />
+      </>
+    )}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="NEXDAN" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:locale" content={content[lang].meta.ogLocale} />
+    <meta property="og:locale:alternate" content={otherLocale} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="NEXDAN, Next Digital Advancement Network" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="theme-color" content="#071338" />
+    {!noindex && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
   <body>
     <slot />

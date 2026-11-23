@@ -1,0 +1,5 @@
+# Search engines and AI assistants may crawl the whole site.
+User-agent: *
+Allow: /
+
+Sitemap: https://nexdan.sa/sitemap-index.xml

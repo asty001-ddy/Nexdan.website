@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import { content } from '../i18n/content';
+const ar = content.ar.notFound;
+const en = content.en.notFound;
+---
+
+<Base lang="ar" title={`${ar.title} | نيكسدان`} description={ar.text} alternates={false} noindex>
+  <main class="nf container">
+    <p class="code" aria-hidden="true">404</p>
+    <h1>{ar.title}</h1>
+    <p>{ar.text}</p>
+    <a class="btn" href="/">{ar.back}</a>
+    <div class="en" lang="en" dir="ltr">
+      <h2>{en.title}</h2>
+      <p>{en.text}</p>
+      <a href="/en/">{en.back}</a>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .nf { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding-block: 48px; }
+  .code { font-family: var(--font-latin); font-weight: 700; font-size: clamp(4rem, 14vw, 7rem); line-height: 1; color: var(--gold-400); margin: 0 0 8px; }
+  h1 { margin: 0 0 12px; }
+  p { color: var(--mist); margin: 0 0 24px; }
+  .en { margin-block-start: 48px; padding-block-start: 24px; border-top: 1px solid var(--line); font-family: var(--font-latin); }
+  .en h2 { font-size: 1.1rem; margin: 0 0 8px; }
+  .en p { margin-block-end: 12px; }
+  .en a { display: inline-flex; align-items: center; min-height: 44px; color: var(--gold-400); }
+</style>

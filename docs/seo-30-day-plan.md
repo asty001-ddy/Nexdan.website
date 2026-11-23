@@ -17,8 +17,8 @@ Rules that apply throughout:
 ### Technical setup (Dev)
 
 - [ ] Confirm the final domain and set `site` in `astro.config.mjs` (currently the placeholder `https://nexdan.sa`).
-- [ ] Add `@astrojs/sitemap` so `sitemap-index.xml` lists both languages, and add `public/robots.txt` pointing to it.
-- [ ] Add JSON-LD structured data to the home page: `Organization` (name: NEXDAN / نيكسدان, logo, url, sameAs: social profiles) and `ProfessionalService` with `areaServed`: Jeddah, Riyadh, Saudi Arabia, and the Jeddah address once confirmed.
+- [x] Add `@astrojs/sitemap` so `sitemap-index.xml` lists both languages, and add `public/robots.txt` pointing to it. (Done; update the domain in `robots.txt` with `site`.)
+- [x] Add JSON-LD structured data: `Organization` and `WebSite` with `areaServed` Jeddah, Riyadh, Saudi Arabia (done in `Base.astro`). Still to add once confirmed: `logo`, `sameAs` (social profiles) and the Jeddah address.
 - [ ] Verify the domain in Google Search Console and Bing Webmaster Tools, and submit the sitemap to both.
 - [ ] Replace the text logo and favicon with the official logo files (SVG).
 
