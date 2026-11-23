@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import Home from '../components/Home.astro';
+import { content } from '../i18n/content';
+
+const t = content.ar;
+---
+
+<Base lang="ar" title={t.meta.title} description={t.meta.description}>
+  <Home lang="ar" />
+</Base>

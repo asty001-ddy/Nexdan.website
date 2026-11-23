@@ -1,0 +1,92 @@
+/* NEXDAN brand tokens, taken from the "Our Story" posters: deep navy, gold accents, white type. */
+:root {
+  --navy-950: #040b24;
+  --navy-900: #071338;
+  --navy-800: #0b1f55;
+  --navy-700: #12307a;
+  --gold-400: #f2c75c;
+  --gold-500: #e3ad3a;
+  --gold-600: #c08a1e;
+  --white: #ffffff;
+  --mist: #c9d3ec;
+  --line: rgba(242, 199, 92, 0.35);
+
+  --font-latin: 'Montserrat', system-ui, sans-serif;
+  --font-arabic: 'Tajawal', 'Montserrat', system-ui, sans-serif;
+
+  --radius: 22px;
+  --max: 1160px;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+html { background-color: var(--navy-950); }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--navy-950);
+  background-image: radial-gradient(140% 1200px at 50% 0%, var(--navy-800) 0%, var(--navy-900) 45%, var(--navy-950) 100%);
+  background-repeat: no-repeat;
+  color: var(--white);
+  font-family: var(--font-latin);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+html[dir='rtl'] body { font-family: var(--font-arabic); }
+
+a { color: inherit; }
+
+img { max-width: 100%; display: block; }
+
+.container {
+  width: min(var(--max), 100% - 32px);
+  margin-inline: auto;
+}
+
+.gold { color: var(--gold-400); }
+
+.eyebrow-rule {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--gold-400);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 2.4vw, 2rem);
+  margin: 0 0 32px;
+}
+
+.eyebrow-rule::before,
+.eyebrow-rule::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-500), transparent);
+}
+
+.card {
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(7, 19, 56, 0.55);
+  backdrop-filter: blur(6px);
+}
+
+.btn {
+  display: inline-block;
+  padding: 14px 28px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--gold-500), var(--gold-400));
+  color: var(--navy-950);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.btn:focus-visible,
+a:focus-visible { outline: 2px solid var(--gold-400); outline-offset: 3px; }
+
+section { padding-block: clamp(56px, 9vw, 112px); }

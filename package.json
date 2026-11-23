@@ -1,0 +1,18 @@
+{
+  "name": "nexdan-website",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "NEXDAN — Next Digital Advancement Network. Bilingual (Arabic/English) company website.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@fontsource/montserrat": "5.3.0",
+    "@fontsource/tajawal": "5.3.0",
+    "astro": "5.18.2"
+  }
+}

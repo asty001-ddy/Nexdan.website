@@ -1,0 +1,126 @@
+---
+import { content, type Lang } from '../i18n/content';
+
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = content[lang];
+
+// Simple line icons matching the poster style (gold outline).
+const icons: Record<string, string> = {
+  growth: '<path d="M4 20V14M9 20V10M14 20V12M19 20V6M3 9l6-4 5 3 6-5"/>',
+  network: '<circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M10.8 7.2 6.2 15.8M13.2 7.2l4.6 8.6M7.5 18h9"/>',
+  ai: '<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/><text x="12" y="14.5" font-size="6" text-anchor="middle" fill="currentColor" stroke="none" font-weight="700">AI</text>',
+  layers: '<path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/>',
+};
+---
+
+<header class="top container">
+  <a class="logo" href={lang === 'ar' ? '/' : '/en/'} aria-label="NEXDAN">
+    <span class="mark" aria-hidden="true">N<sup>D</sup></span>
+    <span class="word">NEXDAN</span>
+  </a>
+  <nav aria-label="Main">
+    <a href="#story">{t.nav.story}</a>
+    <a href="#pillars">{t.nav.pillars}</a>
+    <a href="#mission">{t.nav.mission}</a>
+    <a href="#contact">{t.nav.contact}</a>
+    <a class="switch" href={t.nav.switchHref} lang={lang === 'ar' ? 'en' : 'ar'}>{t.nav.switch}</a>
+  </nav>
+</header>
+
+<main>
+  <section id="story" class="hero container">
+    <p class="tagline">{t.hero.tagline}</p>
+    <h1>{t.hero.title}</h1>
+    <p class="lead">{t.hero.lead}</p>
+    <a class="btn" href="#contact">{t.hero.cta}</a>
+  </section>
+
+  <section class="container" aria-labelledby="name-title">
+    <h2 id="name-title" class="eyebrow-rule">{t.name.title}</h2>
+    <div class="letters card">
+      {t.name.letters.map((l) => (
+        <div class="letter">
+          <span class="big gold">{l.letter}</span>
+          <span class="word">{l.word}</span>
+          <span class="meaning">{l.meaning}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section id="pillars" class="container" aria-labelledby="pillars-title">
+    <h2 id="pillars-title" class="eyebrow-rule">{t.pillars.title}</h2>
+    <div class="pillars">
+      {t.pillars.items.map((p) => (
+        <article class="pillar">
+          <svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="gold" aria-hidden="true" set:html={icons[p.icon]} />
+          <h3>{p.title}</h3>
+          <p>{p.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section id="mission" class="container" aria-labelledby="mission-title">
+    <div class="mission card">
+      <h2 id="mission-title" class="badge">{t.mission.title}</h2>
+      <p>{t.mission.text}</p>
+    </div>
+  </section>
+
+  <section id="contact" class="container contact" aria-labelledby="contact-title">
+    <h2 id="contact-title" class="eyebrow-rule">{t.contact.title}</h2>
+    <p>{t.contact.text}</p>
+    <a class="btn" href={`mailto:${t.contact.email}`}>{t.contact.email}</a>
+  </section>
+</main>
+
+<footer class="container foot">
+  <p>{t.footer}</p>
+</footer>
+
+<style>
+  .top { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 24px; flex-wrap: wrap; }
+  .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .mark { font-family: var(--font-latin); font-weight: 700; font-size: 1.8rem; line-height: 1; }
+  .mark sup { color: var(--gold-400); font-size: 0.55em; }
+  .logo .word { font-family: var(--font-latin); font-weight: 600; letter-spacing: 0.35em; }
+  nav { display: flex; gap: 20px; flex-wrap: wrap; font-weight: 500; }
+  nav a { text-decoration: none; color: var(--mist); }
+  nav a:hover { color: var(--white); }
+  nav .switch { color: var(--gold-400); }
+
+  .hero { text-align: center; max-width: 880px; }
+  .tagline { font-family: var(--font-latin); letter-spacing: 0.3em; text-transform: uppercase; font-size: 0.8rem; color: var(--gold-400); margin: 0 0 16px; }
+  h1 { font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.2; margin: 0 0 20px; }
+  .lead { color: var(--mist); font-size: clamp(1rem, 1.6vw, 1.15rem); margin: 0 auto 32px; max-width: 720px; }
+
+  .letters { display: grid; grid-template-columns: repeat(4, 1fr); padding: 24px 8px; }
+  .letter { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px; padding-inline: 12px; }
+  .letter + .letter { border-inline-start: 1px solid var(--line); }
+  .letter .big { font-family: var(--font-latin); font-size: 2.8rem; font-weight: 700; line-height: 1; }
+  .letter .word { font-family: var(--font-latin); font-weight: 700; }
+  .letter .meaning { color: var(--mist); font-size: 0.95rem; }
+
+  .pillars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .pillar { text-align: center; padding: 8px 12px; }
+  .pillar + .pillar { border-inline-start: 1px solid var(--line); }
+  .pillar h3 { margin: 14px 0 6px; font-size: 1.1rem; }
+  .pillar p { margin: 0; color: var(--mist); }
+  .pillar svg { margin-inline: auto; }
+
+  .mission { position: relative; text-align: center; padding: 48px 24px 32px; max-width: 900px; margin-inline: auto; }
+  .badge { position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%); margin: 0; padding: 6px 32px; border-radius: 10px; background: linear-gradient(90deg, var(--gold-600), var(--gold-400)); color: var(--navy-950); font-size: 1.3rem; white-space: nowrap; }
+  .mission p { margin: 0; font-size: clamp(1.1rem, 2vw, 1.45rem); }
+
+  .contact { text-align: center; }
+  .contact p { color: var(--mist); margin: 0 0 24px; }
+
+  .foot { padding-block: 32px; border-top: 1px solid var(--line); color: var(--mist); font-size: 0.9rem; text-align: center; }
+
+  @media (max-width: 760px) {
+    .letters, .pillars { grid-template-columns: repeat(2, 1fr); row-gap: 24px; }
+    .letter + .letter, .pillar + .pillar { border-inline-start: 0; }
+  }
+</style>
