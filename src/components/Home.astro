@@ -2,6 +2,9 @@
 import { content, type Lang } from '../i18n/content';
 import NetworkMap from './NetworkMap.astro';
 import Logo from './Logo.astro';
+import ServiceDemo from './ServiceDemo.astro';
+import Ambition from './Ambition.astro';
+import Ecosystem from './Ecosystem.astro';
 
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -18,23 +21,6 @@ const pillarIcons: Record<string, string> = {
   ai: '<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/><text x="12" y="14.5" font-size="6" text-anchor="middle" fill="currentColor" stroke="none" font-weight="700">AI</text>',
   layers: '<path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/>',
 };
-
-// Line illustrations for the three services: a document turned into structured fields (AI),
-// an application window (software), a building with a connected sensor (IoT).
-const art: Record<string, string> = {
-  ai: `<rect x="18" y="14" width="78" height="104" rx="8"/><path d="M32 36h50M32 50h42M32 64h50M32 78h30M32 92h44" class="soft"/>
-       <path d="M110 66h34" class="gold"/><path d="m138 59 7 7-7 7" class="gold"/>
-       <rect x="160" y="26" width="104" height="24" rx="6"/><rect x="160" y="56" width="104" height="24" rx="6"/><rect x="160" y="86" width="104" height="24" rx="6"/>
-       <circle cx="174" cy="38" r="4" class="dot"/><circle cx="174" cy="68" r="4" class="dot"/><circle cx="174" cy="98" r="4" class="dot"/>
-       <path d="M186 38h56M186 68h40M186 98h50" class="soft"/>`,
-  code: `<rect x="14" y="14" width="212" height="112" rx="10"/><path d="M14 36h212"/><circle cx="30" cy="25" r="3.5" class="dot"/><circle cx="42" cy="25" r="3.5"/><circle cx="54" cy="25" r="3.5"/>
-         <rect x="28" y="50" width="52" height="62" rx="6" class="soft"/><path d="M96 54h80M96 68h106M96 82h66" class="soft"/>
-         <path d="m112 98-10 8 10 8M150 98l10 8-10 8M137 94l-12 26" class="gold"/>`,
-  iot: `<path d="M40 126V58l56-30 56 30v68"/><path d="M24 126h168"/>
-        <rect x="62" y="70" width="18" height="18" rx="3" class="soft"/><rect x="112" y="70" width="18" height="18" rx="3" class="soft"/><rect x="62" y="98" width="18" height="18" rx="3" class="soft"/><rect x="88" y="98" width="20" height="28" rx="3"/>
-        <circle cx="96" cy="44" r="5" class="dot"/><path d="M84 32a17 17 0 0 1 24 0M76 24a28 28 0 0 1 40 0" class="gold"/>
-        <path d="M166 96h44v28h-44z" class="soft"/><path d="m172 116 9-8 8 5 15-12" class="gold"/>`,
-};
 const arrow = '<svg viewBox="0 0 16 12" width="16" height="12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 6h13M9.5 1.5 14 6l-4.5 4.5"/></svg>';
 ---
 
@@ -45,8 +31,8 @@ const arrow = '<svg viewBox="0 0 16 12" width="16" height="12" fill="none" strok
   <nav aria-label={t.nav.label}>
     <div class="sections">
       <a href="#services">{t.nav.services}</a>
+      <a href="#process">{t.nav.process}</a>
       <a href="#pillars">{t.nav.pillars}</a>
-      <a href="#mission">{t.nav.mission}</a>
       <a href="#contact">{t.nav.contact}</a>
     </div>
     <a class="switch" href={t.nav.switchHref} lang={lang === 'ar' ? 'en' : 'ar'} hreflang={lang === 'ar' ? 'en' : 'ar'}>{t.nav.switch}</a>
@@ -77,12 +63,36 @@ const arrow = '<svg viewBox="0 0 16 12" width="16" height="12" fill="none" strok
       <div class="svc-grid">
         {t.services.items.map((s) => (
           <article class={`svc svc-${s.icon}`}>
-            <svg class="art" viewBox={s.icon === 'ai' ? '0 0 280 132' : '0 0 240 140'} aria-hidden="true" set:html={art[s.icon]} />
-            <h3>{s.title}</h3>
-            <p>{s.text}</p>
+            <div class="visual"><ServiceDemo kind={s.icon as 'ai' | 'code' | 'iot'} lang={lang} /></div>
+            <div class="txt">
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </div>
           </article>
         ))}
       </div>
+      <p class="note">{t.services.note}</p>
+    </div>
+  </section>
+
+  <Ambition lang={lang} />
+
+  <section id="process" class="process" aria-labelledby="process-title">
+    <div class="wrap">
+      <div class="section-head">
+        <h2 id="process-title">{t.process.title}</h2>
+        <p>{t.process.intro}</p>
+      </div>
+      <ol class="steps">
+        {t.process.steps.map((s, i) => (
+          <li>
+            <span class="step-no" aria-hidden="true">{i + 1}</span>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+            <p class="out"><span>{t.process.outputLabel}</span>{s.output}</p>
+          </li>
+        ))}
+      </ol>
     </div>
   </section>
 
@@ -101,20 +111,7 @@ const arrow = '<svg viewBox="0 0 16 12" width="16" height="12" fill="none" strok
     </div>
   </section>
 
-  <section id="pillars" class="pillars" aria-labelledby="pillars-title">
-    <div class="wrap">
-      <h2 id="pillars-title">{t.pillars.title}</h2>
-      <ul>
-        {t.pillars.items.map((p) => (
-          <li>
-            <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={pillarIcons[p.icon]} />
-            <h3>{p.title}</h3>
-            <p>{p.text}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </section>
+  <Ecosystem lang={lang} icons={pillarIcons} />
 
   <section id="mission" class="mission" aria-labelledby="mission-title">
     <div class="wrap mission-grid">
@@ -149,6 +146,8 @@ const arrow = '<svg viewBox="0 0 16 12" width="16" height="12" fill="none" strok
 
 <style>
   main:focus { outline: none; }
+  /* SVG labels are allowed to overhang their box; never let them cause a sideways scroll */
+  main { overflow-x: clip; }
 
   .skip {
     position: absolute; inset-inline-start: 16px; top: 8px; z-index: 10;
@@ -167,59 +166,62 @@ const arrow = '<svg viewBox="0 0 16 12" width="16" height="12" fill="none" strok
   }
   nav .switch { color: var(--white); border: 1px solid var(--navy-line); border-radius: 999px; padding-inline: 16px; margin-inline-start: 8px; }
 
-  /* Hero: statement on the start side, the network map on the other */
+  /* Hero */
   .hero { padding-block: clamp(32px, 6vw, 72px) var(--section); overflow-x: clip; }
   .hero-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.95fr); align-items: center; gap: clamp(32px, 5vw, 72px); }
-  h1 { font-size: clamp(2rem, 3.7vw, 3.4rem); font-weight: 650; line-height: 1.35; }
-  html[lang='en'] h1 { line-height: 1.08; font-size: clamp(2.3rem, 4.8vw, 4.2rem); }
-  .lead { margin-block: 24px 36px; max-width: 54ch; color: var(--mist-on-dark); font-size: clamp(1.05rem, 1.4vw, 1.2rem); }
+  h1 { font-size: clamp(2.1rem, 3.9vw, 3.5rem); font-weight: 600; line-height: 1.32; }
+  html[lang='en'] h1 { line-height: 1.08; font-size: clamp(2.3rem, 4.8vw, 4.2rem); font-weight: 500; letter-spacing: -0.03em; }
+  .lead { margin-block: 24px 36px; max-width: 54ch; color: var(--mist-on-dark); font-size: clamp(1.05rem, 1.4vw, 1.2rem); font-weight: 300; }
   .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }
 
-  /* Services: the one light section, an asymmetric grid where AI leads */
-  .services { background: var(--mist); color: var(--ink); padding-block: var(--section); }
+  /* Shared section heading: statement on the start side, short intro on the other */
   .section-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: end; gap: 16px 48px; margin-block-end: clamp(32px, 5vw, 56px); }
-  h2 { font-size: clamp(1.9rem, 3.6vw, 3rem); line-height: 1.2; }
-  .section-head p { color: var(--ink-muted); max-width: 46ch; font-size: 1.1rem; }
-  .svc-grid { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 16px; }
-  .svc { background: var(--white); border: 1px solid var(--card-line); border-radius: 18px; padding: clamp(24px, 3vw, 36px); display: flex; flex-direction: column; }
-  .svc-ai { grid-row: span 2; border-radius: 24px; }
-  .svc h3 { font-size: 1.3rem; margin-block: 20px 8px; }
-  .svc-ai h3 { font-size: clamp(1.5rem, 2.4vw, 1.9rem); margin-block-start: auto; padding-block-start: 32px; }
-  .svc p { color: var(--ink-muted); max-width: 48ch; }
-  .art { width: 100%; max-width: 280px; height: auto; fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-  .svc-ai .art { max-width: 440px; }
-  .art :global(.soft) { stroke: #9aa8c8; }
-  .art :global(.gold) { stroke: var(--gold-deep); stroke-width: 2.2; }
-  .art :global(.dot) { fill: var(--gold); stroke: none; }
+  .section-head p { max-width: 46ch; font-size: 1.05rem; }
+
+  /* Services: light section, product-style screens lead each card */
+  .services { background: var(--mist); color: var(--ink); padding-block: var(--section); }
+  .services .section-head p { color: var(--ink-muted); }
+  .svc-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .svc { background: var(--white); border: 1px solid var(--card-line); border-radius: 18px; padding: clamp(20px, 2.6vw, 32px); display: flex; flex-direction: column; }
+  /* AI leads: a full-width card with the text on the start side and the screen beside it */
+  .svc-ai { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); grid-template-areas: 'text visual'; align-items: center; column-gap: clamp(24px, 4vw, 56px); border-radius: 22px; }
+  .svc-ai .txt { grid-area: text; }
+  .visual { margin-block-end: 24px; min-width: 0; }
+  .svc-ai .visual { grid-area: visual; margin: 0; font-size: 1.1rem; }
+  .svc h3 { font-size: 1.25rem; margin-block-end: 6px; }
+  .svc-ai h3 { font-size: clamp(1.45rem, 2.2vw, 1.8rem); }
+  .svc p { color: var(--ink-muted); max-width: 50ch; }
+  .note { margin-block-start: 16px; color: var(--ink-muted); font-size: 0.8rem; }
+
+  /* Process: a real sequence, so it is numbered and joined by a line */
+  .process { background: var(--mist); color: var(--ink); padding-block: var(--section); }
+  .process .section-head p { color: var(--ink-muted); }
+  .steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; position: relative; }
+  .steps::before { content: ''; position: absolute; inset-inline: 22px; top: 22px; height: 1px; background: var(--card-line); }
+  .steps li { position: relative; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+  .step-no { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--ink); color: var(--white); font-weight: 600; font-variant-numeric: tabular-nums; margin-block-end: 12px; box-shadow: 0 0 0 6px var(--mist); }
+  .steps h3 { font-size: 1.2rem; }
+  .steps p { color: var(--ink-muted); }
+  .out { margin-block-start: auto; padding-block-start: 12px; display: flex; flex-direction: column; gap: 2px; color: var(--ink) !important; font-weight: 600; border-top: 1px solid var(--card-line); }
+  .out span { font-size: 0.75rem; font-weight: 500; color: var(--gold-deep); }
 
   /* Name: the letters themselves are the design. Always left to right, it is a Latin acronym. */
   .name { padding-block: var(--section) 0; }
   .letters { list-style: none; margin: clamp(32px, 5vw, 56px) 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-block: 1px solid var(--navy-line); }
   .letters li { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px; padding-block: 24px 32px; min-width: 0; }
   .letters li + li { border-inline-start: 1px solid var(--navy-line); }
-  /* Solid fill: an outline would expose the variable font's overlapping contours */
-  .glyph { font-size: clamp(2.5rem, 13vw, 11rem); font-weight: 700; line-height: 1; color: #22387c; transition: color 250ms ease; }
+  .glyph { font-size: clamp(2.5rem, 13vw, 11rem); font-weight: 600; line-height: 1; color: #22387c; transition: color 250ms ease; }
   @media (hover: hover) and (pointer: fine) {
     .letters li:hover .glyph { color: var(--gold); }
   }
   .word { font-weight: 600; font-size: 1.15rem; margin-block-start: 12px; overflow-wrap: break-word; hyphens: auto; max-width: 100%; }
   .meaning { color: var(--mist-on-dark); font-size: 0.95rem; max-width: 100%; overflow-wrap: break-word; hyphens: auto; }
 
-  /* Pillars */
-  .pillars { padding-block: var(--section); }
-  .pillars ul { list-style: none; margin: clamp(32px, 5vw, 56px) 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px 0; }
-  .pillars li { padding-inline: 24px; min-width: 0; }
-  .pillars li:first-child { padding-inline-start: 0; }
-  .pillars li + li { border-inline-start: 1px solid var(--navy-line); }
-  .pillars svg { color: var(--gold); }
-  .pillars h3 { font-size: 1.15rem; margin-block: 18px 6px; }
-  .pillars p { color: var(--mist-on-dark); }
-
   /* Mission: one large statement on a raised band */
   .mission { background: var(--navy-raised); padding-block: var(--section); }
   .mission-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); gap: 24px 48px; align-items: start; }
   .mission h2 { font-size: 1.2rem; color: var(--gold); padding-block-start: 0.6em; }
-  .statement { font-size: clamp(1.5rem, 3.1vw, 2.5rem); line-height: 1.55; font-weight: 400; max-width: 32ch; }
+  .statement { font-size: clamp(1.5rem, 3.1vw, 2.5rem); line-height: 1.55; font-weight: 300; max-width: 32ch; }
   html[lang='en'] .statement { line-height: 1.3; letter-spacing: -0.015em; }
 
   /* Contact */
@@ -227,7 +229,7 @@ const arrow = '<svg viewBox="0 0 16 12" width="16" height="12" fill="none" strok
   .contact h2 { font-size: clamp(2.4rem, 7vw, 5.6rem); line-height: 1.15; max-width: 16ch; }
   html[lang='en'] .contact h2 { line-height: 1.02; letter-spacing: -0.035em; }
   .contact-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px 64px; align-items: end; margin-block-start: clamp(28px, 4vw, 48px); padding-block-start: 32px; border-top: 1px solid var(--navy-line); }
-  .contact-row p { color: var(--mist-on-dark); max-width: 46ch; font-size: 1.1rem; }
+  .contact-row p { color: var(--mist-on-dark); max-width: 46ch; font-size: 1.1rem; font-weight: 300; }
   .contact-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }
   .email { display: inline-flex; align-items: center; min-height: 44px; font-size: 1.15rem; text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; text-decoration-color: var(--gold); overflow-wrap: anywhere; }
 
@@ -242,9 +244,9 @@ const arrow = '<svg viewBox="0 0 16 12" width="16" height="12" fill="none" strok
     .hero-grid { grid-template-columns: 1fr; }
     .section-head, .mission-grid, .contact-row { grid-template-columns: 1fr; }
     .svc-grid { grid-template-columns: 1fr; }
-    .svc-ai { grid-row: auto; }
-    .pillars ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .pillars li + li:nth-child(odd) { padding-inline-start: 0; border-inline-start: 0; }
+    .svc-ai { grid-template-columns: 1fr; grid-template-areas: 'visual' 'text'; row-gap: 24px; }
+    .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 40px; }
+    .steps::before { display: none; }
   }
   @media (max-width: 720px) {
     .sections { display: none; }
@@ -253,8 +255,7 @@ const arrow = '<svg viewBox="0 0 16 12" width="16" height="12" fill="none" strok
     .letters li + li:nth-child(3) { border-inline-start: 0; }
     .letters li:nth-child(n + 3) { border-block-start: 1px solid var(--navy-line); }
   }
-  @media (max-width: 420px) {
-    .pillars ul { grid-template-columns: 1fr; }
-    .pillars li, .pillars li + li, .pillars li + li:nth-child(odd) { padding-inline: 0; border-inline-start: 0; }
+  @media (max-width: 520px) {
+    .steps { grid-template-columns: 1fr; }
   }
 </style>

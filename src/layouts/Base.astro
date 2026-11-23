@@ -1,7 +1,15 @@
 ---
-import '@fontsource-variable/readex-pro/wght.css';
+import '@fontsource/ibm-plex-sans-arabic/300.css';
+import '@fontsource/ibm-plex-sans-arabic/400.css';
+import '@fontsource/ibm-plex-sans-arabic/500.css';
+import '@fontsource/ibm-plex-sans-arabic/600.css';
 import '../styles/global.css';
 import { content, type Lang } from '../i18n/content';
+// Preload the files the first screen needs, so the headline never reflows when the font arrives.
+import ar600 from '@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-arabic-600-normal.woff2?url';
+import ar300 from '@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-arabic-300-normal.woff2?url';
+import la500 from '@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-latin-500-normal.woff2?url';
+import la300 from '@fontsource/ibm-plex-sans-arabic/files/ibm-plex-sans-arabic-latin-300-normal.woff2?url';
 
 interface Props {
   lang: Lang;
@@ -13,6 +21,7 @@ interface Props {
 }
 
 const { lang, title, description, alternates = true, noindex = false } = Astro.props;
+const preloads = lang === 'ar' ? [ar600, ar300] : [la500, la300];
 const dir = lang === 'ar' ? 'rtl' : 'ltr';
 const site = Astro.site ?? new URL(Astro.url.origin);
 const arUrl = new URL('/', site).href;
@@ -63,6 +72,7 @@ const jsonLd = {
     <title>{title}</title>
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex" />}
+    {preloads.map((href) => <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />)}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     {alternates && (

@@ -7,7 +7,7 @@ The site is bilingual. Arabic is the default language and is served right to lef
 ## Tech stack
 
 - [Astro](https://astro.build) 7, static output
-- Font: Readex Pro variable (Arabic and Latin), self-hosted through Fontsource
+- Font: IBM Plex Sans Arabic (Arabic and matching Latin), self-hosted through Fontsource
 - Hero map: Saudi Arabia from Natural Earth 1:50m (public domain), in `src/components/sa-map.ts`
 - No client-side framework; plain CSS with brand tokens in `src/styles/global.css`
 
@@ -28,7 +28,11 @@ npm run preview   # preview the production build
 src/
   i18n/content.ts        All page copy, Arabic and English side by side
   layouts/Base.astro     <html> shell: lang, dir (rtl/ltr), meta tags, fonts
-  components/Home.astro  Home page sections (hero, name meaning, pillars, mission, contact)
+  components/Home.astro  Home page: hero, services, process, name meaning, mission, contact
+  components/NetworkMap.astro  Hero map of Saudi Arabia with the network routes
+  components/ServiceDemo.astro Product-style screens for the three services (illustrative)
+  components/Ambition.astro    Infographic: 2030 targets of the National Strategy for Data and AI
+  components/Ecosystem.astro   Infographic: capabilities, pillars and who benefits
   pages/index.astro      Arabic home page (/)
   pages/en/index.astro   English home page (/en/)
   pages/404.astro        Bilingual not-found page (noindex)

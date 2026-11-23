@@ -17,6 +17,7 @@ export const content = {
     nav: {
       label: 'القائمة الرئيسية',
       services: 'خدماتنا',
+      process: 'كيف نعمل',
       pillars: 'ركائزنا',
       mission: 'رسالتنا',
       contact: 'تواصل معنا',
@@ -38,6 +39,7 @@ export const content = {
     services: {
       title: 'ما نقدّمه',
       intro: 'نصمّم ونبني الأنظمة الرقمية التي تعتمد عليها شركتك، من الفكرة الأولى حتى الإطلاق.',
+      note: 'الشاشات المعروضة أمثلة توضيحية.',
       items: [
         {
           icon: 'ai',
@@ -55,6 +57,67 @@ export const content = {
           text: 'حساسات وأجهزة متصلة تراقب المباني والمستودعات والمعدّات، مع لوحات متابعة وتنبيهات لحظية.',
         },
       ],
+    },
+    demos: {
+      ai: {
+        file: 'فاتورة-مورد.pdf',
+        status: 'تمت القراءة',
+        heading: 'البيانات المستخرجة',
+        fields: [
+          ['المورد', 'شركة الساحل للتوريد'],
+          ['رقم الفاتورة', 'INV-20418'],
+          ['التاريخ', '12/11/2026'],
+          ['الإجمالي', '48,300 ر.س'],
+        ],
+      },
+      software: {
+        app: 'بوابة العملاء',
+        kpis: [['طلبات اليوم', '128'], ['قيد التنفيذ', '34'], ['مكتملة', '94']],
+        chart: 'الطلبات خلال الأسبوع',
+        days: ['أحد', 'إثنين', 'ثلاثاء', 'أربعاء', 'خميس'],
+      },
+      iot: {
+        place: 'مستودع 3، جدة',
+        metric: 'الرطوبة',
+        value: '68%',
+        limit: 'الحد',
+        limitValue: '60%',
+        alert: 'الرطوبة أعلى من الحد المسموح',
+      },
+    },
+    ambition: {
+      title: 'المملكة تبني اقتصاد الذكاء الاصطناعي',
+      intro: 'أطلقت المملكة الاستراتيجية الوطنية للبيانات والذكاء الاصطناعي عام 2020، وهذه أهدافها بحلول 2030. نيكسدان تبني الحلول التي تحتاجها الشركات لتكون جزءاً منها.',
+      start: '2020',
+      end: '2030',
+      startLabel: 'إطلاق الاستراتيجية',
+      endLabel: 'موعد تحقيق الأهداف',
+      now: 'اليوم',
+      invest: { value: '75', unit: 'مليار ريال', label: 'استثمارات محلية وأجنبية مستهدفة في البيانات والذكاء الاصطناعي', key: 'كل خط يمثل مليار ريال' },
+      people: { value: '20,000', label: 'متخصص وخبير في البيانات والذكاء الاصطناعي', key: 'كل نقطة تمثل 100 متخصص' },
+      startups: { value: '+300', label: 'شركة ناشئة في البيانات والذكاء الاصطناعي', key: 'كل مربع يمثل شركة ناشئة' },
+      rank: { value: '15', label: 'هدف المملكة: ضمن أفضل 15 دولة في الذكاء الاصطناعي عالمياً', key: 'ترتيب الدول' },
+      source: 'المصدر: الاستراتيجية الوطنية للبيانات والذكاء الاصطناعي، سعوديبيديا',
+      sourceUrl: 'https://saudipedia.com/en/national-strategy-for-data-and-ai-nsdai',
+    },
+    process: {
+      title: 'كيف نعمل',
+      intro: 'أربع مراحل واضحة، ولكل مرحلة مخرج تستلمه قبل الانتقال إلى التي تليها.',
+      outputLabel: 'المخرج',
+      steps: [
+        { title: 'الاكتشاف', text: 'نفهم سير العمل والبيانات والأنظمة الحالية، ونحدد أين تصنع التقنية فرقاً.', output: 'خطة المشروع' },
+        { title: 'النموذج الأولي', text: 'نبني نسخة أولية يجربها فريقك قبل الالتزام بالتطوير الكامل.', output: 'نموذج قابل للتجربة' },
+        { title: 'التطوير', text: 'نطوّر الحل ونربطه بأنظمتك ونختبره مع المستخدمين.', output: 'نظام جاهز للإطلاق' },
+        { title: 'الدعم', text: 'نتابع الأداء ونحدّث الحل مع نمو أعمالك.', output: 'تحسين مستمر' },
+      ],
+    },
+    ecosystem: {
+      title: 'كيف تترابط المنظومة',
+      intro: 'ثلاث قدرات تقنية تقوم على أربع ركائز، لخدمة الأفراد والشركات والمجتمع.',
+      capabilities: ['الذكاء الاصطناعي', 'البرمجيات', 'إنترنت الأشياء'],
+      beneficiaries: ['الأفراد', 'الشركات', 'المجتمع'],
+      rings: ['القدرات', 'الركائز', 'المستفيدون'],
+      label: 'مخطط دائري: نيكسدان في المركز، تحيط بها ثلاث قدرات، ثم أربع ركائز، ثم المستفيدون',
     },
     name: {
       title: 'معنى الاسم',
@@ -103,6 +166,7 @@ export const content = {
     nav: {
       label: 'Main',
       services: 'Services',
+      process: 'How we work',
       pillars: 'Pillars',
       mission: 'Mission',
       contact: 'Contact',
@@ -124,6 +188,7 @@ export const content = {
     services: {
       title: 'What we do',
       intro: 'We design and build the digital systems your business runs on, from the first idea to launch.',
+      note: 'Screens shown are illustrative examples.',
       items: [
         {
           icon: 'ai',
@@ -141,6 +206,67 @@ export const content = {
           text: 'Connected sensors and devices that monitor buildings, warehouses and equipment, with live dashboards and alerts.',
         },
       ],
+    },
+    demos: {
+      ai: {
+        file: 'supplier-invoice.pdf',
+        status: 'Read',
+        heading: 'Extracted fields',
+        fields: [
+          ['Supplier', 'Coastal Supply Co.'],
+          ['Invoice no.', 'INV-20418'],
+          ['Date', '12/11/2026'],
+          ['Total', 'SAR 48,300'],
+        ],
+      },
+      software: {
+        app: 'Customer portal',
+        kpis: [['Orders today', '128'], ['In progress', '34'], ['Completed', '94']],
+        chart: 'Orders this week',
+        days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu'],
+      },
+      iot: {
+        place: 'Warehouse 3, Jeddah',
+        metric: 'Humidity',
+        value: '68%',
+        limit: 'Limit',
+        limitValue: '60%',
+        alert: 'Humidity above the allowed limit',
+      },
+    },
+    ambition: {
+      title: 'The Kingdom is building an AI economy',
+      intro: 'Saudi Arabia launched its National Strategy for Data and AI in 2020. These are its targets for 2030. NEXDAN builds the systems companies need to take part.',
+      start: '2020',
+      end: '2030',
+      startLabel: 'Strategy launched',
+      endLabel: 'Target year',
+      now: 'Today',
+      invest: { value: '75', unit: 'billion SAR', label: 'Local and foreign investment targeted in data and AI', key: 'Each line is SAR 1 billion' },
+      people: { value: '20,000', label: 'Data and AI specialists and experts', key: 'Each dot is 100 specialists' },
+      startups: { value: '300+', label: 'Data and AI startups supported', key: 'Each square is one startup' },
+      rank: { value: '15', label: 'The goal: a top 15 country in AI worldwide', key: 'Country ranking' },
+      source: 'Source: National Strategy for Data and AI, Saudipedia',
+      sourceUrl: 'https://saudipedia.com/en/national-strategy-for-data-and-ai-nsdai',
+    },
+    process: {
+      title: 'How we work',
+      intro: 'Four clear stages, each ending with something you receive before we move to the next.',
+      outputLabel: 'You get',
+      steps: [
+        { title: 'Discovery', text: 'We map your workflow, data and current systems, and agree where technology will make a difference.', output: 'Project plan' },
+        { title: 'Prototype', text: 'We build an early version your team can try before committing to the full build.', output: 'Working prototype' },
+        { title: 'Build', text: 'We build the solution, connect it to your systems and test it with your users.', output: 'Launch-ready system' },
+        { title: 'Support', text: 'We monitor performance and update the solution as your business grows.', output: 'Ongoing improvement' },
+      ],
+    },
+    ecosystem: {
+      title: 'How the network fits together',
+      intro: 'Three technical capabilities, built on four pillars, serving individuals, businesses and society.',
+      capabilities: ['AI', 'Software', 'IoT'],
+      beneficiaries: ['Individuals', 'Businesses', 'Society'],
+      rings: ['Capabilities', 'Pillars', 'Who benefits'],
+      label: 'Radial diagram: NEXDAN at the centre, surrounded by three capabilities, then four pillars, then who benefits',
     },
     name: {
       title: 'What the name means',

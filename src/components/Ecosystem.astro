@@ -1,0 +1,125 @@
+---
+// Infographic: NEXDAN at the centre, three capabilities, four pillars (from the brand poster),
+// then who benefits (from the mission). The pillar list beside it is the readable legend.
+import { content, type Lang } from '../i18n/content';
+
+interface Props { lang: Lang; icons: Record<string, string> }
+const { lang, icons } = Astro.props;
+const t = content[lang];
+const e = t.ecosystem;
+const C = 320;
+const R = [118, 205, 288];
+const at = (r: number, deg: number) => {
+  const a = (deg * Math.PI) / 180;
+  return [+(C + r * Math.cos(a)).toFixed(1), +(C + r * Math.sin(a)).toFixed(1)];
+};
+const caps = e.capabilities.map((label, i) => ({ label, p: at(R[0], 90 + i * 120) }));
+const pillars = t.pillars.items.map((p, i) => ({ label: p.title, p: at(R[1], 45 + i * 90) }));
+// Who benefits sits at the top and at the two sides, clear of the pillar positions at 45° steps.
+const people = e.beneficiaries.map((label, i) => ({ label, p: at(R[2], [270, 10, 170][i]) }));
+const rtl = lang === 'ar';
+---
+
+<section id="pillars" class="eco" aria-labelledby="eco-title">
+  <div class="wrap">
+    <div class="head">
+      <h2 id="eco-title">{e.title}</h2>
+      <p>{e.intro}</p>
+    </div>
+    <div class="grid">
+      <svg viewBox="0 0 640 640" role="img" aria-label={e.label} class="diagram">
+        {R.map((r) => <circle cx={C} cy={C} r={r} class="ring" />)}
+
+        {caps.map((c) => <line x1={C} y1={C} x2={c.p[0]} y2={c.p[1]} class="spoke strong" />)}
+        {pillars.map((c) => <line x1={C} y1={C} x2={c.p[0]} y2={c.p[1]} class="spoke" />)}
+        {people.map((c) => <line x1={C} y1={C} x2={c.p[0]} y2={c.p[1]} class="spoke faint" />)}
+
+        <circle cx={C} cy={C} r="54" class="core" />
+        <text x={C} y={C + 6} text-anchor="middle" class="core-label" direction="ltr">NEXDAN</text>
+
+        {caps.map((c) => (
+          <g>
+            <circle cx={c.p[0]} cy={c.p[1]} r="9" class="node gold" />
+            <text x={c.p[0]} y={c.p[1] + 30} text-anchor="middle" class="node-label strong" direction={rtl ? 'rtl' : 'ltr'}>{c.label}</text>
+          </g>
+        ))}
+        {pillars.map((c) => (
+          <g>
+            <circle cx={c.p[0]} cy={c.p[1]} r="7" class="node" />
+            <text x={c.p[0]} y={c.p[1] + 26} text-anchor="middle" class="node-label pillar-label" direction={rtl ? 'rtl' : 'ltr'}>{c.label}</text>
+          </g>
+        ))}
+        {people.map((c) => (
+          <g>
+            <circle cx={c.p[0]} cy={c.p[1]} r="7" class="node hollow" />
+            {/* Side labels are anchored inward so they never run past the diagram edge.
+                 direction="ltr" keeps SVG anchoring literal; a single Arabic word still shapes correctly. */}
+            <text x={c.p[0] + (c.p[0] > C + 50 ? 6 : c.p[0] < C - 50 ? -6 : 0)} y={c.p[1] + (c.p[1] < C ? -16 : 30)} text-anchor={c.p[0] > C + 50 ? 'end' : c.p[0] < C - 50 ? 'start' : 'middle'} class="node-label" direction="ltr">{c.label}</text>
+          </g>
+        ))}
+      </svg>
+
+      <div class="side">
+      <ul class="key" aria-hidden="true">
+        <li><i class="k-cap"></i>{e.rings[0]}</li>
+        <li><i class="k-pillar"></i>{e.rings[1]}</li>
+        <li><i class="k-people"></i>{e.rings[2]}</li>
+      </ul>
+      <ul class="legend">
+        {t.pillars.items.map((p) => (
+          <li>
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={icons[p.icon]} />
+            <div>
+              <h3>{p.title}</h3>
+              <p>{p.text}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .eco { padding-block: var(--section); }
+  .head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px 48px; align-items: end; margin-block-end: clamp(32px, 5vw, 56px); }
+  .head p { color: var(--mist-on-dark); max-width: 46ch; font-size: 1.05rem; }
+  .grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: center; }
+  .diagram { width: 100%; height: auto; overflow: visible; font-family: var(--font); }
+  .ring { fill: none; stroke: var(--navy-line); stroke-width: 1; }
+  .spoke { stroke: var(--navy-line); stroke-width: 1; }
+  .spoke.strong { stroke: var(--gold); stroke-opacity: 0.6; }
+  .spoke.faint { stroke-dasharray: 2 5; }
+  .core { fill: var(--navy-raised); stroke: var(--gold); stroke-width: 1.5; }
+  .core-label { fill: var(--white); font-size: 14px; font-weight: 600; letter-spacing: 0.22em; }
+  .node { fill: var(--white); stroke: var(--night); stroke-width: 3; }
+  .node.gold { fill: var(--gold); }
+  .node.hollow { fill: var(--night); stroke: var(--white); stroke-width: 1.5; }
+  .node-label { fill: var(--white); font-size: 15px; paint-order: stroke; stroke: var(--night); stroke-width: 6px; stroke-linejoin: round; }
+  .node-label.strong { font-weight: 600; fill: var(--gold); font-size: 16px; }
+
+  .key { list-style: none; margin: 0 0 20px; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 24px; color: var(--mist-on-dark); font-size: 0.85rem; }
+  .key li { display: inline-flex; align-items: center; gap: 8px; }
+  .key i { width: 12px; height: 12px; border-radius: 50%; }
+  .k-cap { background: var(--gold); }
+  .k-pillar { background: var(--white); }
+  .k-people { border: 1.5px solid var(--white); }
+  .legend { list-style: none; margin: 0; padding: 0; display: grid; }
+  .legend li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 16px; padding-block: 20px; border-top: 1px solid var(--navy-line); }
+  .legend li:last-child { border-bottom: 1px solid var(--navy-line); }
+  .legend svg { color: var(--gold); }
+  .legend h3 { font-size: 1.05rem; margin-block-end: 2px; }
+  .legend p { color: var(--mist-on-dark); font-size: 0.95rem; }
+
+  /* On phones the diagram is small: enlarge the labels and drop the pillar names, which the list beside it repeats */
+  @media (max-width: 600px) {
+    .node-label { font-size: 26px; stroke-width: 8px; }
+    .node-label.strong { font-size: 27px; }
+    .pillar-label { display: none; }
+  }
+  @media (max-width: 900px) {
+    .head, .grid { grid-template-columns: 1fr; }
+    .diagram { max-width: 560px; margin-inline: auto; }
+  }
+</style>
