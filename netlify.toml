@@ -1,0 +1,14 @@
+# Netlify build settings. These override the dashboard, so the site builds the same way every time.
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # Astro 7 needs a recent Node 22 (see "engines" in package.json)
+  NODE_VERSION = "22"
+
+# Fingerprinted assets (fonts, CSS) never change under the same name, so cache them for a year.
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
