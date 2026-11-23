@@ -1,0 +1,98 @@
+---
+// The hero visual: Saudi Arabia with NEXDAN's network linking Jeddah and Riyadh to cities
+// across the Kingdom, taken from the brand story poster. Geography never mirrors in RTL.
+import { SA_VIEWBOX, SA_PATH, CITIES, ROUTES } from './sa-map';
+
+interface Props { label: string; jeddah: string; riyadh: string; lang: 'ar' | 'en' }
+const { label, jeddah, riyadh, lang } = Astro.props;
+
+// A gentle curve for each route: control point pushed sideways by 14% of the route length.
+const curve = ([a, b]: [string, string]) => {
+  const [x1, y1] = CITIES[a];
+  const [x2, y2] = CITIES[b];
+  const mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+  const dx = x2 - x1, dy = y2 - y1;
+  const cx = mx - dy * 0.14, cy = my + dx * 0.14;
+  return `M${x1} ${y1}Q${cx.toFixed(1)} ${cy.toFixed(1)} ${x2} ${y2}`;
+};
+
+// Routes draw out from Jeddah, then from Riyadh once the Jeddah–Riyadh line lands.
+// Gaps shrink as the sequence goes on so it reads as one wave.
+let t = 0;
+const routes = ROUTES.map(([a, b], i) => {
+  const delay = Math.round(t);
+  t += i < 6 ? 110 - i * 12 : 70 - (i - 6) * 6;
+  return { d: curve([a, b]), delay, to: b };
+});
+const arrival = Object.fromEntries(routes.map((r) => [r.to, r.delay + 700]));
+const hubs = new Set(['jeddah', 'riyadh']);
+const [jx, jy] = CITIES.jeddah;
+const [rx, ry] = CITIES.riyadh;
+---
+
+<figure class="map">
+  <svg viewBox={SA_VIEWBOX} role="img" aria-label={label}>
+    <defs>
+      <pattern id="sa-dots" width="9" height="9" patternUnits="userSpaceOnUse">
+        <circle cx="1.5" cy="1.5" r="1.1" />
+      </pattern>
+      <clipPath id="sa-clip"><path d={SA_PATH} /></clipPath>
+    </defs>
+
+    <path class="land" d={SA_PATH} />
+    <rect class="dots" width="100%" height="100%" fill="url(#sa-dots)" clip-path="url(#sa-clip)" />
+    <path class="coast" d={SA_PATH} />
+
+    <g class="routes">
+      {routes.map((r) => <path d={r.d} pathLength="1" style={`--d:${r.delay}ms`} />)}
+    </g>
+
+    <g class="nodes">
+      {Object.entries(CITIES).filter(([n]) => !hubs.has(n)).map(([n, [x, y]]) => (
+        <circle cx={x} cy={y} r="4" style={`--d:${arrival[n] ?? 600}ms`} />
+      ))}
+    </g>
+
+    <g class="hub">
+      <circle class="halo" cx={jx} cy={jy} r="9" />
+      <circle class="core" cx={jx} cy={jy} r="7" />
+      <text x={jx - 16} y={jy + 6} text-anchor="end" lang={lang} direction="ltr">{jeddah}</text>
+    </g>
+    <g class="hub">
+      <circle class="halo" cx={rx} cy={ry} r="9" style="animation-delay: 1.4s" />
+      <circle class="core" cx={rx} cy={ry} r="7" />
+      <text x={rx + 16} y={ry + 6} text-anchor="start" lang={lang} direction="ltr">{riyadh}</text>
+    </g>
+  </svg>
+</figure>
+
+<style>
+  .map { margin: 0; width: 100%; }
+  svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+  .land { fill: var(--navy-raised); }
+  .dots circle { fill: var(--mist-on-dark); opacity: 0.22; }
+  .dots { pointer-events: none; }
+  .coast { fill: none; stroke: var(--gold); stroke-opacity: 0.55; stroke-width: 1.3; stroke-linejoin: round; }
+
+  .routes path { fill: none; stroke: var(--gold); stroke-width: 1.8; stroke-linecap: round; opacity: 0.9; }
+  .nodes circle { fill: var(--gold); }
+  .core { fill: var(--gold); stroke: var(--night); stroke-width: 3; }
+  .halo { fill: none; stroke: var(--gold); stroke-width: 1.5; transform-box: fill-box; transform-origin: center; opacity: 0; }
+  /* A night-coloured halo keeps labels readable where they cross a route */
+  text { fill: var(--white); font-family: var(--font); font-size: 20px; font-weight: 600; stroke: var(--night); stroke-width: 6px; stroke-linejoin: round; paint-order: stroke; }
+
+  /* One orchestrated moment: the network draws out from Jeddah on load, then the two hubs breathe.
+     Reduced motion shows the finished network with no movement. */
+  @media (prefers-reduced-motion: no-preference) {
+    .routes path { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 900ms var(--ease-out) forwards; animation-delay: calc(var(--d) + 250ms); }
+    .nodes circle { opacity: 0; animation: appear 300ms ease-out forwards; animation-delay: calc(var(--d) + 250ms); }
+    .halo { animation: breathe 3.2s var(--ease-out) 1.6s infinite; }
+  }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @keyframes appear { to { opacity: 1; } }
+  @keyframes breathe {
+    0% { opacity: 0.7; transform: scale(1); }
+    70%, 100% { opacity: 0; transform: scale(3.2); }
+  }
+</style>

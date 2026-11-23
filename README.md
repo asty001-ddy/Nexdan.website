@@ -7,7 +7,8 @@ The site is bilingual. Arabic is the default language and is served right to lef
 ## Tech stack
 
 - [Astro](https://astro.build) 7, static output
-- Fonts: Tajawal (Arabic) and Montserrat (Latin), self-hosted through Fontsource
+- Font: Readex Pro variable (Arabic and Latin), self-hosted through Fontsource
+- Hero map: Saudi Arabia from Natural Earth 1:50m (public domain), in `src/components/sa-map.ts`
 - No client-side framework; plain CSS with brand tokens in `src/styles/global.css`
 
 ## Getting started
@@ -42,7 +43,7 @@ Change text in `src/i18n/content.ts`. Every key exists in both `ar` and `en`; up
 
 ## Brand
 
-Deep navy backgrounds, gold accents and white type, following the NEXDAN brand story posters in `docs/brand-reference/`. Use CSS logical properties (`margin-inline`, `padding-inline-start`, `border-inline-start`) rather than left/right, so layouts flip correctly between Arabic and English.
+Deep navy grounds, gold for actions and the network, white type, following the NEXDAN brand story posters in `docs/brand-reference/`. Use CSS logical properties (`margin-inline`, `padding-inline-start`, `border-inline-start`) rather than left/right, so layouts flip correctly between Arabic and English.
 
 ## Plans
 
@@ -51,7 +52,7 @@ Deep navy backgrounds, gold accents and white type, following the NEXDAN brand s
 ## Open items
 
 - Final domain (`site` in `astro.config.mjs` and the `Sitemap:` line in `public/robots.txt`)
-- Official logo files (SVG) to replace the text logo and favicon
+- Official logo files (SVG) to replace the redrawn mark in `src/components/Logo.astro` and the favicon
 - Confirmed contact email (placeholder `info@nexdan.sa` in `src/i18n/content.ts`)
 - Confirm the scope of the three service descriptions in `content.services`
 - Social profile links and office address for the structured data in `Base.astro`

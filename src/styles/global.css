@@ -1,42 +1,24 @@
-/* NEXDAN brand tokens, taken from the "Our Story" posters: deep navy, gold accents, white type. */
+/* NEXDAN tokens. Brand colours from the "Our Story" posters: navy, gold, white.
+   Gold is reserved for action and for the network; everything else is navy and white. */
 :root {
-  --navy-950: #040b24;
-  --navy-900: #071338;
-  --navy-800: #0b1f55;
-  --navy-700: #12307a;
-  --gold-400: #f2c75c;
-  --gold-500: #e3ad3a;
-  --gold-600: #c08a1e;
+  --night: #06112e;        /* page ground */
+  --navy-raised: #0c1d4f;  /* land, raised surfaces on dark */
+  --navy-line: #1f3270;    /* hairlines on dark */
+  --gold: #e4b04a;         /* action + network */
+  --gold-deep: #8f6411;    /* gold text on light grounds (AA on mist and white) */
   --white: #ffffff;
-  --mist: #c9d3ec;
-  --line: rgba(242, 199, 92, 0.35);
+  --mist: #eef2fa;         /* the one light section */
+  --ink: #0a1a44;          /* text on light */
+  --ink-muted: #46557a;
+  --mist-on-dark: #a9b6d6; /* secondary text on dark */
+  --card-line: #d3dbec;
 
-  --font-latin: 'Montserrat', system-ui, sans-serif;
-  --font-arabic: 'Tajawal', 'Montserrat', system-ui, sans-serif;
+  --font: 'Readex Pro Variable', 'Segoe UI', Tahoma, system-ui, sans-serif;
 
-  --dot: rgba(201, 211, 236, 0.16);
-
-  /* Motion: strong ease-out for entrances and presses */
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-
-  --radius: 22px;
-  --max: 1160px;
-}
-
-/* Same colours in OKLCH for browsers that support it (perceptually even steps) */
-@supports (color: oklch(0% 0 0)) {
-  :root {
-    --navy-950: oklch(16% 0.054 266);
-    --navy-900: oklch(20.4% 0.074 266);
-    --navy-800: oklch(26.3% 0.102 264.7);
-    --navy-700: oklch(33.9% 0.131 263.9);
-    --gold-400: oklch(84.7% 0.133 87.3);
-    --gold-500: oklch(77.8% 0.141 82.3);
-    --gold-600: oklch(67% 0.131 78.8);
-    --mist: oklch(86.7% 0.036 268.3);
-    --line: oklch(84.7% 0.133 87.3 / 0.35);
-    --dot: oklch(86.7% 0.036 268.3 / 0.16);
-  }
+  --max: 1200px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --section: clamp(72px, 10vw, 136px);
 }
 
 *,
@@ -47,102 +29,100 @@
   html { scroll-behavior: smooth; }
 }
 
-html { background-color: var(--navy-950); }
+html { background-color: var(--night); }
 
 body {
   margin: 0;
-  min-height: 100vh;
-  background-color: var(--navy-950);
-  background-image: radial-gradient(140% 1200px at 50% 0%, var(--navy-800) 0%, var(--navy-900) 45%, var(--navy-950) 100%);
-  background-repeat: no-repeat;
+  background-color: var(--night);
   color: var(--white);
-  font-family: var(--font-latin);
-  line-height: 1.6;
+  font-family: var(--font);
+  font-size: 1.0625rem;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
 }
 
-html[dir='rtl'] body { font-family: var(--font-arabic); }
+html[lang='en'] body { line-height: 1.6; }
 
 a { color: inherit; }
+img, svg { max-width: 100%; }
 
-img { max-width: 100%; display: block; }
-
-.container {
-  width: min(var(--max), 100% - 32px);
+.wrap {
+  width: min(var(--max), 100% - 2 * var(--gutter));
   margin-inline: auto;
 }
 
-.gold { color: var(--gold-400); }
+h1, h2, h3 { margin: 0; font-weight: 600; text-wrap: balance; }
+p { margin: 0; text-wrap: pretty; }
 
-.eyebrow-rule {
-  display: flex;
+/* Long words break instead of overflowing at large text sizes; headings hyphenate */
+h1, h2, h3 { overflow-wrap: break-word; hyphens: auto; }
+p { overflow-wrap: break-word; }
+
+/* Latin headings are set tighter; Arabic needs its natural spacing and taller lines */
+html[lang='en'] h1, html[lang='en'] h2 { letter-spacing: -0.025em; }
+
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px; }
+
+/* Primary action. Adapted from Uiverse.io (0x-Sarthak, MIT): a dark disc behind the arrow
+   grows to fill the button on hover. Rewritten to name exact properties, use one ease-out
+   curve, gate hover to real pointers and mirror the arrow in RTL. */
+.cta {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
   align-items: center;
-  gap: 16px;
-  color: var(--gold-400);
-  font-weight: 700;
-  font-size: clamp(1.4rem, 2.4vw, 2rem);
-  margin: 0 0 32px;
-}
-
-.eyebrow-rule::before,
-.eyebrow-rule::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold-500), transparent);
-}
-
-.card {
-  border: 1.5px solid var(--line);
-  border-radius: var(--radius);
-  background: rgba(7, 19, 56, 0.55);
-}
-
-.btn {
-  display: inline-block;
-  padding: 14px 28px;
+  gap: 14px;
+  min-height: 52px;
+  padding-block: 6px;
+  padding-inline: 6px 24px;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--gold-500), var(--gold-400));
-  color: var(--navy-950);
-  font-weight: 700;
+  background: var(--gold);
+  color: var(--night);
+  font-weight: 600;
   text-decoration: none;
-  min-height: 48px;
-  max-width: 100%;
-  line-height: 20px;
-  overflow-wrap: anywhere;
-  /* Press feedback: quick scale on press, no bounce */
-  transition: transform 160ms var(--ease-out), filter 150ms ease;
+  transition: transform 160ms var(--ease-out);
 }
-
-/* Hover only where a real pointer can hover; touch fires false hovers on tap */
+.cta::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset-block: 6px;
+  inset-inline-start: 6px;
+  width: 40px;
+  border-radius: 999px;
+  background: var(--night);
+  transition: width 380ms var(--ease-out);
+}
+.cta .arrow {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  color: var(--gold);
+  flex: none;
+}
+.cta .arrow svg { transition: transform 380ms var(--ease-out); }
+html[dir='rtl'] .cta .arrow svg { scale: -1 1; }
+.cta .label { transition: color 200ms ease; }
 @media (hover: hover) and (pointer: fine) {
-  .btn:hover { filter: brightness(1.06); }
+  .cta:hover::before { width: calc(100% - 12px); }
+  .cta:hover .label { color: var(--white); }
+  .cta:hover .arrow svg { transform: translateX(3px); }
+  html[dir='rtl'] .cta:hover .arrow svg { transform: translateX(-3px); }
 }
-.btn:active { transform: scale(0.97); }
+.cta:active { transform: scale(0.97); }
 
-.btn:focus-visible,
-a:focus-visible { outline: 2px solid var(--gold-400); outline-offset: 3px; }
-
-section { padding-block: clamp(40px, 6vw, 80px); }
-
-h2, h3 { text-wrap: balance; }
-/* At large text sizes, long words ("businesses", "Advancement") break instead of overflowing.
-   Headings hyphenate; body text only breaks a word that cannot fit on a line at all. */
-h1, h2, h3, .word { overflow-wrap: break-word; hyphens: auto; }
-p, .meaning { overflow-wrap: break-word; }
-p { text-wrap: pretty; }
-
-/* Scroll reveal, only when JS is on. Stagger gaps (--d) shrink down each group.
-   Reduced motion keeps a short fade and drops the movement. */
-.reveal-ready [data-reveal] {
-  opacity: 0;
-  transition: opacity 200ms ease;
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+  text-decoration-color: color-mix(in srgb, currentColor 45%, transparent);
+  transition: text-decoration-color 150ms ease;
 }
-@media (prefers-reduced-motion: no-preference) {
-  .reveal-ready [data-reveal] {
-    transform: translateY(12px);
-    transition: opacity 420ms var(--ease-out), transform 420ms var(--ease-out);
-    transition-delay: var(--d, 0ms);
-  }
+@media (hover: hover) and (pointer: fine) {
+  .text-link:hover { text-decoration-color: currentColor; }
 }
-.reveal-ready [data-reveal].is-in { opacity: 1; transform: none; }

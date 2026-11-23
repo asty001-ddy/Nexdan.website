@@ -1,0 +1,21 @@
+---
+// Simplified redraw of the NEXDAN mark from the brand poster (two rounded strokes, an x and a gold D).
+// Replace with the official SVG when the NEXDAN team supplies it.
+interface Props { href: string; label?: string }
+const { href, label } = Astro.props;
+---
+
+<a class="logo" href={href} aria-label={label}>
+  <svg viewBox="0 0 40 34" width="38" height="32" aria-hidden="true">
+    <path d="M7 31V14a8 8 0 0 1 8-8" fill="none" stroke="currentColor" stroke-width="5.5" stroke-linecap="round" />
+    <path d="M27 6v17a8 8 0 0 1-8 8" fill="none" stroke="currentColor" stroke-width="5.5" stroke-linecap="round" />
+    <path d="m14.5 18.5 5 5m0-5-5 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" />
+    <path d="M32 1.5h1.6a4.6 4.6 0 0 1 0 9.2H32Z" fill="none" stroke="var(--gold)" stroke-width="2.4" stroke-linejoin="round" />
+  </svg>
+  <span class="word" lang="en">NEXDAN</span>
+</a>
+
+<style>
+  .logo { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; color: var(--white); text-decoration: none; }
+  .word { font-weight: 600; font-size: 1.05rem; letter-spacing: 0.32em; margin-inline-end: -0.32em; }
+</style>

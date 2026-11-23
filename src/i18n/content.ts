@@ -28,9 +28,16 @@ export const content = {
       title: 'نبني حلول الذكاء الاصطناعي والبرمجيات وإنترنت الأشياء لشركات المملكة',
       lead: 'نيكسدان، شبكة الجيل القادم للتقدّم الرقمي، شركة سعودية وُلدت من رؤية لبناء منظومة رقمية متكاملة. نعمل مع الشركات في جدة والرياض وسائر مناطق المملكة على حلول ذكية ترفع الكفاءة وتدعم النمو، بما يتماشى مع رؤية السعودية 2030.',
       cta: 'ناقش مشروعك معنا',
+      secondary: 'تعرّف على خدماتنا',
+    },
+    map: {
+      label: 'خريطة المملكة العربية السعودية، تربط فيها خطوط الشبكة جدة والرياض بمدن المملكة',
+      jeddah: 'جدة',
+      riyadh: 'الرياض',
     },
     services: {
       title: 'ما نقدّمه',
+      intro: 'نصمّم ونبني الأنظمة الرقمية التي تعتمد عليها شركتك، من الفكرة الأولى حتى الإطلاق.',
       items: [
         {
           icon: 'ai',
@@ -73,6 +80,7 @@ export const content = {
     },
     contact: {
       title: 'تواصل معنا',
+      heading: 'لنبنِ ما هو قادم',
       text: 'أخبرنا بما تريد بناءه وأين تعمل شركتك، وسنرتّب معك اجتماعاً أولياً لفهم احتياجك.',
       email: 'info@nexdan.sa',
       subject: 'استفسار عن مشروع',
@@ -106,9 +114,16 @@ export const content = {
       title: 'We build AI, software and IoT solutions for Saudi businesses',
       lead: 'NEXDAN is a Saudi company founded to build an integrated digital ecosystem. We work with businesses in Jeddah, Riyadh and across the Kingdom on intelligent solutions that raise efficiency and support growth, in line with Saudi Vision 2030.',
       cta: 'Discuss your project',
+      secondary: 'See our services',
+    },
+    map: {
+      label: 'Map of Saudi Arabia with network lines linking Jeddah and Riyadh to cities across the Kingdom',
+      jeddah: 'Jeddah',
+      riyadh: 'Riyadh',
     },
     services: {
       title: 'What we do',
+      intro: 'We design and build the digital systems your business runs on, from the first idea to launch.',
       items: [
         {
           icon: 'ai',
@@ -151,6 +166,7 @@ export const content = {
     },
     contact: {
       title: 'Contact',
+      heading: 'Let’s build what’s next',
       text: 'Tell us what you want to build and where your business operates, and we will arrange a first meeting to understand what you need.',
       email: 'info@nexdan.sa',
       subject: 'Project enquiry',
