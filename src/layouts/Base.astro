@@ -16,8 +16,10 @@ interface Props {
 
 const { lang, title, description } = Astro.props;
 const dir = lang === 'ar' ? 'rtl' : 'ltr';
-const altHref = lang === 'ar' ? '/en/' : '/';
-const altLang = lang === 'ar' ? 'en' : 'ar';
+const site = Astro.site ?? new URL(Astro.url.origin);
+const arUrl = new URL('/', site).href;
+const enUrl = new URL('/en/', site).href;
+const canonical = lang === 'ar' ? arUrl : enUrl;
 ---
 
 <!doctype html>
@@ -28,7 +30,10 @@ const altLang = lang === 'ar' ? 'en' : 'ar';
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="alternate" hreflang={altLang} href={altHref} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="ar" href={arUrl} />
+    <link rel="alternate" hreflang="en" href={enUrl} />
+    <link rel="alternate" hreflang="x-default" href={arUrl} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta name="theme-color" content="#071338" />

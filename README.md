@@ -6,13 +6,13 @@ The site is bilingual. Arabic is the default language and is served right to lef
 
 ## Tech stack
 
-- [Astro](https://astro.build) 5, static output
+- [Astro](https://astro.build) 7, static output
 - Fonts: Tajawal (Arabic) and Montserrat (Latin), self-hosted through Fontsource
 - No client-side framework; plain CSS with brand tokens in `src/styles/global.css`
 
 ## Getting started
 
-Requires Node.js 18.20 or later (20+ recommended).
+Requires Node.js 22.23.4 or later.
 
 ```bash
 npm install

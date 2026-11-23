@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.1.0",
   "private": true,
-  "description": "NEXDAN — Next Digital Advancement Network. Bilingual (Arabic/English) company website.",
+  "description": "NEXDAN \u2014 Next Digital Advancement Network. Bilingual (Arabic/English) company website.",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -13,6 +13,9 @@
   "dependencies": {
     "@fontsource/montserrat": "5.3.0",
     "@fontsource/tajawal": "5.3.0",
-    "astro": "5.18.2"
+    "astro": "7.4.8"
+  },
+  "engines": {
+    "node": ">=22.23.4"
   }
 }
