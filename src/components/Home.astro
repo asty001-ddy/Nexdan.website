@@ -28,7 +28,7 @@ const icons: Record<string, string> = {
   </nav>
 </header>
 
-<main>
+<main class="clip">
   <section id="story" class="hero container">
     <p class="tagline">{t.hero.tagline}</p>
     <h1>{t.hero.title}</h1>
@@ -39,8 +39,8 @@ const icons: Record<string, string> = {
   <section class="container" aria-labelledby="name-title">
     <h2 id="name-title" class="eyebrow-rule">{t.name.title}</h2>
     <div class="letters card">
-      {t.name.letters.map((l) => (
-        <div class="letter">
+      {t.name.letters.map((l, i) => (
+        <div class="letter" data-reveal style={`--i:${i}`}>
           <span class="big gold">{l.letter}</span>
           <span class="word">{l.word}</span>
           <span class="meaning">{l.meaning}</span>
@@ -52,8 +52,8 @@ const icons: Record<string, string> = {
   <section id="pillars" class="container" aria-labelledby="pillars-title">
     <h2 id="pillars-title" class="eyebrow-rule">{t.pillars.title}</h2>
     <div class="pillars">
-      {t.pillars.items.map((p) => (
-        <article class="pillar">
+      {t.pillars.items.map((p, i) => (
+        <article class="pillar" data-reveal style={`--i:${i}`}>
           <svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="gold" aria-hidden="true" set:html={icons[p.icon]} />
           <h3>{p.title}</h3>
           <p>{p.text}</p>
@@ -63,7 +63,7 @@ const icons: Record<string, string> = {
   </section>
 
   <section id="mission" class="container" aria-labelledby="mission-title">
-    <div class="mission card">
+    <div class="mission card" data-reveal>
       <h2 id="mission-title" class="badge">{t.mission.title}</h2>
       <p>{t.mission.text}</p>
     </div>
@@ -71,8 +71,10 @@ const icons: Record<string, string> = {
 
   <section id="contact" class="container contact" aria-labelledby="contact-title">
     <h2 id="contact-title" class="eyebrow-rule">{t.contact.title}</h2>
-    <p>{t.contact.text}</p>
-    <a class="btn" href={`mailto:${t.contact.email}`}>{t.contact.email}</a>
+    <div data-reveal>
+      <p>{t.contact.text}</p>
+      <a class="btn" href={`mailto:${t.contact.email}`}>{t.contact.email}</a>
+    </div>
   </section>
 </main>
 
@@ -80,21 +82,50 @@ const icons: Record<string, string> = {
   <p>{t.footer}</p>
 </footer>
 
+<script is:inline>
+  // Reveal below-the-fold content once as it scrolls into view. Without JS, or with
+  // reduced motion, everything is simply visible.
+  (function () {
+    var els = document.querySelectorAll('[data-reveal]');
+    if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    document.documentElement.classList.add('reveal-ready');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+</script>
+
 <style>
+  .clip { overflow-x: clip; }
   .top { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-block: 24px; flex-wrap: wrap; }
-  .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+  .logo { display: flex; align-items: center; gap: 12px; min-height: 44px; text-decoration: none; }
   .mark { font-family: var(--font-latin); font-weight: 700; font-size: 1.8rem; line-height: 1; }
   .mark sup { color: var(--gold-400); font-size: 0.55em; }
   .logo .word { font-family: var(--font-latin); font-weight: 600; letter-spacing: 0.35em; }
-  nav { display: flex; gap: 20px; flex-wrap: wrap; font-weight: 500; }
-  nav a { text-decoration: none; color: var(--mist); }
+  nav { display: flex; gap: 8px 12px; flex-wrap: wrap; font-weight: 500; }
+  /* 44px hit areas (Fitts); colour-only hover, no motion on frequently used links */
+  nav a { display: inline-flex; align-items: center; min-height: 44px; padding-inline: 8px; text-decoration: none; color: var(--mist); transition: color 150ms ease-out; }
   nav a:hover { color: var(--white); }
   nav .switch { color: var(--gold-400); }
 
-  .hero { text-align: center; max-width: 880px; }
+  .hero { position: relative; isolation: isolate; text-align: center; max-width: 880px; padding-block-start: clamp(48px, 8vw, 96px); }
+  /* One background texture for the hero only: a faint square-dot grid that fades out at the edges */
+  .hero::before {
+    content: ''; position: absolute; z-index: -1; inset: 0 -40vw;
+    background-image: radial-gradient(circle, var(--dot) 1px, transparent 1.2px);
+    background-size: 22px 22px;
+    mask-image: radial-gradient(60% 70% at 50% 45%, #000 0%, transparent 75%);
+    -webkit-mask-image: radial-gradient(60% 70% at 50% 45%, #000 0%, transparent 75%);
+    pointer-events: none;
+  }
   .tagline { font-family: var(--font-latin); letter-spacing: 0.3em; text-transform: uppercase; font-size: 0.8rem; color: var(--gold-400); margin: 0 0 16px; }
-  h1 { font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.2; margin: 0 0 20px; }
-  .lead { color: var(--mist); font-size: clamp(1rem, 1.6vw, 1.15rem); margin: 0 auto 32px; max-width: 720px; }
+  h1 { font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.15; margin: 0 0 20px; text-wrap: balance; }
+  :global(html[dir='ltr']) h1 { letter-spacing: -0.02em; }
+  :global(html[dir='rtl']) h1 { line-height: 1.35; }
+  .lead { color: var(--mist); font-size: clamp(1rem, 1.6vw, 1.15rem); margin: 0 auto 32px; max-width: 62ch; text-wrap: pretty; }
 
   .letters { display: grid; grid-template-columns: repeat(4, 1fr); padding: 24px 8px; }
   .letter { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px; padding-inline: 12px; }
@@ -106,13 +137,13 @@ const icons: Record<string, string> = {
   .pillars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
   .pillar { text-align: center; padding: 8px 12px; }
   .pillar + .pillar { border-inline-start: 1px solid var(--line); }
-  .pillar h3 { margin: 14px 0 6px; font-size: 1.1rem; }
+  .pillar h3 { margin: 14px 0 6px; font-size: 1.1rem; text-wrap: balance; }
   .pillar p { margin: 0; color: var(--mist); }
   .pillar svg { margin-inline: auto; }
 
   .mission { position: relative; text-align: center; padding: 48px 24px 32px; max-width: 900px; margin-inline: auto; }
   .badge { position: absolute; top: 0; left: 50%; transform: translate(-50%, -50%); margin: 0; padding: 6px 32px; border-radius: 10px; background: linear-gradient(90deg, var(--gold-600), var(--gold-400)); color: var(--navy-950); font-size: 1.3rem; white-space: nowrap; }
-  .mission p { margin: 0; font-size: clamp(1.1rem, 2vw, 1.45rem); }
+  .mission p { margin: 0 auto; max-width: 52ch; font-size: clamp(1.1rem, 2vw, 1.45rem); text-wrap: pretty; }
 
   .contact { text-align: center; }
   .contact p { color: var(--mist); margin: 0 0 24px; }
